@@ -1,0 +1,6 @@
+# Purpose: baseman in Albers equal−area conical projection (here: Kuril-Kamchatka Trench)
+# GMT modules: pscoast
+gmt pscoast -R140/170/40/60 -JB155/50/45/55/6i -P -Ba \
+	-Gdarkseagreen1 -V -W0.25p -Slightcyan \
+	-Df -U -B+t"The Kuril-Kamchatka Trench area" \
+	-Bxa2f1g2 -Bya2f1g2 > GMT_basemap-KKT.ps
