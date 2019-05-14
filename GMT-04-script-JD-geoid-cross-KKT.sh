@@ -1,7 +1,7 @@
 #!/bin/sh
 # Purpose: Geoid model map with coastline and grid crosses
-# Equidistant conic projection (here: Kuril-Kamchatka Trench)
-# GMT modules: grd2cpt, grdimage, pscoast, logo, pstext
+# Equidistant conic projection (here: Kuril-Kamchatka Trench). Small inserted World map: Eckert VI projection.
+# GMT modules: grd2cpt, grdimage, pscoast, psbasemap, psscale, psimage, logo, pstext
 # Step-1. Generate a file
 ps=Geoid_KKT.ps
 # Step-2. Generate a color palette table from grid
@@ -48,20 +48,28 @@ gmt psscale -R -J -Cgeoid.cpt \
     --FONT_ANNOT_PRIMARY=5p,Helvetica,dimgray \
     -Baf+l"Gravitation modelling color scale" \
     -I0.2 -By+lm -O -K >> $ps
-# Step-8. Add logo
+# Step-8. Insert map (global geoid)
+gmt psimage -R -J Geoid_globe_map.jpg -DjTR+w4c+o-5.5c/0c -F+pthinnest,dimgray -O -K >> $ps
+# Step-9. Add logo
 gmt logo -R -J -Dx6.5/-2.2+o0.1i/0.1i+w2c -O -K >> $ps
-# Step-9. Add subtitle
+# Step-10. Add subtitle
 gmt pstext -R0/10/0/15 -JX10/10 -X0.5c -Y4.5c -N -O -K \
     -F+f10p,Palatino-Roman,black+jLB >> $ps << EOF
 3.0 15.0 World Geoid Image version 9.2, 2 min resolution
 EOF
-# Step-10. Add text
+# Step-11. Add text
 gmt pstext -R -J -X2.5c -Y-6.4c -N -O -K \
     -F+f7p,Palatino-Roman,dimgray+jCB >> $ps << END
 10.0 0.0 Standard paralles at 45\232 and 55\232 N
 END
-# Step-11. Add text
-gmt pstext -R -J -N -O \
+# Step-12. Add text
+gmt pstext -R -J -N -O -K \
     -F+f7p,Palatino-Roman,dimgray+jCB >> $ps << END
 9.7 4.8 Magnetic rose
+END
+# Step-13. Add text
+gmt pstext -R -J -X3.2c -Y6.0c -N -O -K \
+    -F+f8p,Palatino-Roman,dimgray+jCB >> $ps << END
+9.7 10.0 Global Geoid Model Image
+9.8 9.5 World Map: Eckert VI projection
 END
