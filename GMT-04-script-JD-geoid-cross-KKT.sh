@@ -1,7 +1,7 @@
 #!/bin/sh
 # Purpose: Geoid model map with coastline and grid crosses
 # Equidistant conic projection (here: Kuril-Kamchatka Trench). Small inserted World map: Eckert VI projection.
-# GMT modules: grd2cpt, grdimage, pscoast, psbasemap, psscale, psimage, logo, pstext
+# GMT modules: grd2cpt, grdimage, pscoast, grdcontour, psbasemap, psscale, psimage, logo, pstext
 # Step-1. Generate a file
 ps=Geoid_KKT.ps
 # Step-2. Generate a color palette table from grid
@@ -24,14 +24,16 @@ gmt pscoast -R -J -P \
     --FONT_ANNOT_PRIMARY=7p,Helvetica,dimgray \
     --FONT_LABEL=7p,Helvetica,dimgray \
     -O -K >> $ps
-# Step-5. Add scale, directional rose
+# Step-5. Add geoid contour
+grdcontour geoid.egm96.grd -R -J -C2 -A5 -Wthinnest,dimgray -O -K >> $ps
+# Step-6. Add scale, directional rose
 gmt psbasemap -R -J \
     --FONT=7p,Palatino-Roman,dimgray \
     --MAP_ANNOT_OFFSET=0.0c \
     -Tdg144/57.5+w0.5c+f2+l \
     -Lx5.1i/-0.5i+c50+w800k+l"Equidistant conic projection. Scale, km"+f \
     -UBL/-15p/-40p -O -K >> $ps
-# Step-6. Add scale, magnetic rose
+# Step-7. Add scale, magnetic rose
 gmt psbasemap -R -J \
     --FONT=7p,Palatino-Roman,dimgray \
     --FONT_ANNOT_PRIMARY=7p \
@@ -41,28 +43,28 @@ gmt psbasemap -R -J \
     --MAP_TICK_PEN_PRIMARY=thinnest,dimgray \
     -Tmg162.5/45.2+w1.5i+d-14.5+t45/10/5+i0.25p,blue+p0.25p,red+l+jCM \
     -O -K >> $ps
-# Step-7. Add legend
+# Step-8. Add legend
 gmt psscale -R -J -Cgeoid.cpt \
     -Dg135/40+w4.7i/0.15i+v+o1.0/0i+ml  \
     --FONT_LABEL=8p,Helvetica,dimgray \
     --FONT_ANNOT_PRIMARY=5p,Helvetica,dimgray \
     -Baf+l"Gravitation modelling color scale" \
     -I0.2 -By+lm -O -K >> $ps
-# Step-8. Insert map (global geoid)
+# Step-9. Insert map (global geoid)
 gmt psimage -R -J Geoid_World.jpg -DjTR+w4.3c+o-5.5c/0c -O -K >> $ps
-# Step-9. Add logo
+# Step-10. Add logo
 gmt logo -R -J -Dx6.5/-2.2+o0.1i/0.1i+w2c -O -K >> $ps
-# Step-10. Add subtitle
+# Step-11. Add subtitle
 gmt pstext -R0/10/0/15 -JX10/10 -X0.5c -Y4.5c -N -O -K \
     -F+f10p,Palatino-Roman,black+jLB >> $ps << EOF
 3.0 15.0 World Geoid Image version 9.2, 2 min resolution
 EOF
-# Step-11. Add text
+# Step-12. Add text
 gmt pstext -R -J -X2.5c -Y-6.4c -N -O -K \
     -F+f7p,Palatino-Roman,dimgray+jCB >> $ps << END
 10.0 0.0 Standard paralles at 45\232 and 55\232 N
 END
-# Step-12. Add text
+# Step-13. Add text
 gmt pstext -R -J -N -O \
     -F+f7p,Palatino-Roman,dimgray+jCB >> $ps << END
 9.7 4.8 Magnetic rose
