@@ -1,1 +1,1 @@
-# GMT-04-script-JD-geoid-cross-KKT
+# GMT-04-script-JD-geoid
