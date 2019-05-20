@@ -1,7 +1,7 @@
 #!/bin/sh
 # Purpose: Geoid model map with coastline and grid crosses
 # Equidistant conic projection (here: Kuril-Kamchatka Trench). Small inserted World map: Eckert VI projection.
-# GMT modules: grd2cpt, grdimage, pscoast, grdcontour, psbasemap, psscale, psimage, logo, pstext
+# GMT modules: grd2cpt, grdimage, pscoast, grdcontour, psbasemap, psscale, psimage, logo, pstext, psconvert
 # Step-1. Generate a file
 ps=Geoid_KKT.ps
 # Step-2. Generate a color palette table from grid
@@ -69,3 +69,5 @@ gmt pstext -R -J -N -O \
     -F+f7p,Palatino-Roman,dimgray+jCB >> $ps << END
 9.7 4.8 Magnetic rose
 END
+# Step-14. Convert to image file using GhostScript
+gmt psconvert Geoid_KKT.ps -A0.2c -E720 -P -Tj -Z

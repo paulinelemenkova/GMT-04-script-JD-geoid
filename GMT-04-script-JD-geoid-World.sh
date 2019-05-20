@@ -1,7 +1,7 @@
 #!/bin/sh
 # Purpose: Geoid model map with coastline and grid crosses
 # Pseudocylindrical Eckert VI projection. Area: World.
-# GMT modules: grd2cpt, grdimage, pscoast, psbasemap
+# GMT modules: grd2cpt, grdimage, pscoast, psbasemap, psconvert
 # Step-1. Generate a file
 ps=Geoid_World.ps
 # Step-2. Generate a color palette table from grid
@@ -30,3 +30,5 @@ gmt psbasemap -R -J \
     --MAP_ANNOT_OFFSET=0.5c \
     -Lx4.5i/-0.6i+c50+w10000k+l"Pseudocylindrical Eckert VI projection. Scale, km"+f \
     -O >> $ps
+# Step-6. Convert to image file using GhostScript
+gmt psconvert Geoid_World.ps -A0.2c -E720 -P -Tj -Z
