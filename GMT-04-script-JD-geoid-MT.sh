@@ -40,6 +40,7 @@ gmt psbasemap -R -J \
     --FONT_ANNOT_PRIMARY=7p \
     --MAP_ANNOT_OFFSET_PRIMARY=0.1c \
     --MAP_ANNOT_OFFSET_SECONDARY=0.1c \
+    --MAP_TITLE_OFFSET=0.2c \
     --LABEL_OFFSET=0.1c \
     --MAP_TICK_PEN_PRIMARY=thinnest,dimgray \
     -Tmg170/10+w1.5i+d-14.5+t45/10/5+i0.25p,blue+p0.25p,red+l+jCM \
