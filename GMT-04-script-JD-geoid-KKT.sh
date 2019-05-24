@@ -26,7 +26,7 @@ gmt pscoast -R -J -P \
 	-Bxa4g3f2 -Bya4g3f2 \
     -O -K >> $ps
 # Step-6. Add geoid contour
-grdcontour geoid.egm96.grd -R -J -C2 -A5 -Wthinnest,dimgray -O -K >> $ps
+gmt grdcontour geoid.egm96.grd -R -J -C2 -A5 -Wthinnest,dimgray -O -K >> $ps
 # Step-7. Add scale, directional rose
 gmt psbasemap -R -J \
     --FONT=7p,Palatino-Roman,dimgray \
@@ -51,7 +51,7 @@ gmt psscale -R -J -Cgeoid.cpt \
     --FONT_LABEL=8p,Helvetica,dimgray \
     --FONT_ANNOT_PRIMARY=5p,Helvetica,dimgray \
     -Baf+l"Gravitation modelling color scale" \
-    -I0.2 -By+lm -O -K >> $ps
+    -I0.2 -By+lmGal -O -K >> $ps
 # Step-10. Insert map (global geoid)
 gmt psimage -R -J Geoid_World.jpg -DjTR+w4.3c+o-5.5c/0c -O -K >> $ps
 # Step-11. Add logo
